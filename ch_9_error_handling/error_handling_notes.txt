@@ -1,0 +1,53 @@
+Error Handling in Rust
+
+1. Recoverable: File not found -> So we report the problem to the user and retry the operation
+
+2. Unrecoverable: Trying to access the location beyond the end of an array
+
+ 
+
+Result<T,E> for recoverable error
+
+panic! macro for unrecoverable error
+
+ 
+
+By default panic! marco will unwind, clean up the stach and quit.
+
+Instead of unwinding, one can also abort with panic! macro by selecting the option [panic = 'abort'] in Cargo.toml
+
+ 
+
+If you try to access beyond the end of a data structure in 'C', it will cause an undefined behavior.
+
+You get whatever is at the location in memory that would correspond to the elment in that data structure, even though memory doesn't belong to that data structure.
+
+This causes 'buffer overload' and can be a security vulenerabilities.
+
+ 
+
+RUST_BACKTRACE: Gives a list of all the functions that have called to get to that point
+
+Eg: RUST_BACKTRACE=1 cargo run
+
+ 
+
+enum Result<T, E>{
+
+Ok(T),
+
+Err(E),
+
+}
+
+T, E are generic types
+
+ 
+
+"unwrap_or_else" to handle the errors instead of having multiple match statements
+
+ 
+
+"unwrap" will return the instace of Ok if the Result is Ok else it will panic!
+
+Similar to "unwrap", "expect" will also panic! but with a defined message
